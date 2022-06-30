@@ -1,0 +1,32 @@
+main{
+    margin: 20px;
+    width: 80%;
+    background-color: beige;
+    font-family: 'Fresca', sans-serif;
+}
+
+h1{
+    color: green;
+}
+
+p{
+    font-size: 24px;
+}
+
+
+.contener div{
+    margin: 20px;
+    margin-left: 40px;
+}
+
+.imagen{
+    text-align: center;
+    text-decoration: solid;
+}
+.imagen button{
+    cursor: pointer;
+}
+
+.imagen p{
+    color:blue;
+}
