@@ -1,7 +1,8 @@
 let pPonde = 0
+const materias = []
 
-//Toma los datos ingresados, crea lista y calcula prom
-function tuPromedio(){
+//CREA LISTA DE NOTAS
+function listaNotas(){
     let notasIngresadas = [];
     let valor1 = document.getElementById("valor1").value
         notasIngresadas.push(valor1)
@@ -11,11 +12,7 @@ function tuPromedio(){
         notasIngresadas.push(valor3)
     let valor4 = document.getElementById("valor4").value
         notasIngresadas.push(valor4)
-
-        promPonderado(notasIngresadas)
-    
-   let final = document.getElementById("final")
-       final.innerHTML = `<h3>PROMEDIO</h3><p>${pPonde}</p>`;
+    return notasIngresadas
 }
 
 //GENERALIZACIÓN DEL PROMEDIO 
@@ -29,6 +26,43 @@ function promPonderado(listaNotas){
     }    
 
     pPonde = 0.5*parseFloat(listaNotas[0])+ m*(sumaNotas - listaNotas[0]);
-    console.log("Tu promedio es: ", pPonde)
 }
 
+//Toma los datos ingresados, llama lista de notas y calcula prom
+function tuPromedio(){
+    let notasIngresadas = listaNotas()
+    promPonderado(notasIngresadas)
+    
+   let final = document.getElementById("final")
+       final.innerHTML = `<h3>PROMEDIO</h3><p>${pPonde.toFixed(2)}</p>`;
+    
+    return pPonde.toFixed(2)
+}
+
+//Guarda la info ingresada en el array de materias
+//Guarda el array materias en el Storage
+function creaMateria(){
+    let name = document.getElementById("name").value
+    let notasIngresadas = listaNotas()
+    let promedio = tuPromedio()  
+
+    const nueva = new Materia(name, notasIngresadas, promedio)
+    materias.push(nueva)
+
+    localStorage.setItem('materias', JSON.stringify(materias))
+    msjCarga('Listo','La materia se cargó correctamente.', 'darkred')
+}
+
+//Calcula el promedio general (promedio de todas las mateias)
+function promedioGeneral(){
+    let materiasGuardadas = JSON.parse(localStorage.getItem("materias"))  //array de objetos
+    let sumaProm = 0
+    let promGeneral = 0
+
+    for(let i=0; i< materiasGuardadas.length;i++) { 
+        sumaProm += parseFloat(materiasGuardadas[i].promedio)
+    }
+    
+    promGeneral = (sumaProm)/(materiasGuardadas.length) 
+    console.log(promGeneral)
+}
